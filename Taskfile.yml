@@ -1,0 +1,20 @@
+version: "3"
+
+dotenv:
+  - .env
+
+tasks:
+  setup:
+    dir: packages/news
+
+  login:
+    - echo "Password is $NUV_PASSWORD"
+    - nuv -login $NUV_HOST $NUV_USER
+
+  default:
+    - task: deploy
+
+  deploy:
+    dir: packages
+    cmds:
+      - nuv -wsk project deploy

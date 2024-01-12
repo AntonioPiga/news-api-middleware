@@ -1,0 +1,8 @@
+packages:
+  news:
+    inputs:
+      API_KEY: ${API_KEY}
+    actions:
+      news:
+        web: true
+        function: news/news.py
