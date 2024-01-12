@@ -1,7 +1,7 @@
 import json
 from urllib import request
 
-def main(args):
+async def main(args):
     url = 'http://eventregistry.org/api/v1/event/getBreakingEvents'
     headers = {'Content-Type': 'application/json'}
     data = {
