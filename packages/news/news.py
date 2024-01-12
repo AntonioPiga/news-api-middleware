@@ -1,11 +1,10 @@
-import json
-from urllib import request
+import requests
 
-async def main(args):
+def main(args):
     url = 'http://eventregistry.org/api/v1/event/getBreakingEvents'
     headers = {'Content-Type': 'application/json'}
     data = {
-        "eventImageCount": 3,
+        "eventImageCount": 1,
         "breakingEventsCount": 1,
         "includeEventSummary": True,
         "includeEventLocation": False,
@@ -19,15 +18,11 @@ async def main(args):
         "apiKey": args.get('API_KEY')
     }
 
-    data = json.dumps(data).encode('utf-8')
+    response = requests.get(url, headers=headers, json=data)
 
-    req = request.Request(url, data=data, headers=headers)
-
-    try:
-        with request.urlopen(req) as response:
-            result = response.read().decode('utf-8')
-            return {
-                'body': json.loads(result)
-            }
-    except request.URLError as e:
-        return f"Error: {e}"
+    if response.status_code == 200:
+        return {
+            'body': response.json()
+        }
+    else:
+        return f"Error: {response.status_code} - {response.text}"
